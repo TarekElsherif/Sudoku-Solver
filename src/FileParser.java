@@ -1,12 +1,15 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class FileParser {
 	
+	private String[] rows;
 	private String[][] cells;
-	private String str;
+	
 	public FileParser() {
+		rows = new String[9];
 		cells = new String[9][9];
 		BufferedReader br = null;
 		try {
@@ -14,11 +17,24 @@ public class FileParser {
 			String sCurrentLine;
 
 			br = new BufferedReader(new FileReader("test.txt"));
-
-			while ((sCurrentLine = br.readLine()) != null) {
-				System.out.println(sCurrentLine);
+			for (int i = 0; i < rows.length; i++) {
+				if ((sCurrentLine = br.readLine()) != null) {
+					rows[i] = sCurrentLine;
+					String[] CurrentArray = rows[i].split(" ");
+					if (CurrentArray.length < 9) {
+						System.out.println("Oops, columns are missing. Expected length: 9");
+						break;
+					}
+					for (int j = 0; j < cells[i].length; j++) {
+						cells[i][j] = CurrentArray[j];
+//						System.out.print(cells[i][j]);
+					}
+					System.out.println();
+				} else {
+					System.out.println("Oops, rows are missing. Expected length: " + rows.length);
+					break;
+				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -28,35 +44,50 @@ public class FileParser {
 				ex.printStackTrace();
 			}
 		}
-		
 	}
 	
 	public FileParser(String path) {
-			cells = new String[9][9];
-			BufferedReader br = null;
-			try {
+		rows = new String[9];
+		cells = new String[9][9];
+		BufferedReader br = null;
+		try {
 
-				String sCurrentLine;
+			String sCurrentLine;
 
-				br = new BufferedReader(new FileReader(path));
-
-				while ((sCurrentLine = br.readLine()) != null) {
-					System.out.println(sCurrentLine);
-				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (br != null)br.close();
-				} catch (IOException ex) {
-					ex.printStackTrace();
+			br = new BufferedReader(new FileReader("path"));
+			for (int i = 0; i < rows.length; i++) {
+				if ((sCurrentLine = br.readLine()) != null) {
+					rows[i] = sCurrentLine;
+					String[] CurrentArray = rows[i].split(" ");
+					if (CurrentArray.length < 9) {
+						System.out.println("Oops, columns are missing. Expected length: 9");
+					}
+					for (int j = 0; j < cells[i].length; j++) {
+						cells[i][j] = CurrentArray[j];
+//						System.out.print(cells[i][j]);
+					}
+					System.out.println();
+				} else {
+					System.out.println("Oops, rows are missing. Expected length: " + rows.length);
+					break;
 				}
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public String[][] returnCells() {
+		return cells;
 	}
 	
 	public static void main (String [] args) {
-		FileParser tak = new FileParser();
-		System.out.println(tak.str);
+		new FileParser();
 	}
 }
