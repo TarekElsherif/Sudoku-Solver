@@ -83,7 +83,7 @@ public class FileParser {
 		}
 	}
 	
-	public String[][] returnCells() {
+	public String[][] getCells() {
 		return cells;
 	}
 	
