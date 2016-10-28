@@ -1,30 +1,28 @@
-
-
 import java.util.Arrays;
 
 public class mainer{
-	public static char[][] startGrid = {
-			{'3', '*', '*', '2', '4', '*', '*', '6', '*'},
-			{'*', '4', '*', '*', '*', '*', '*', '5', '3'},
-			{'1', '8', '9', '6', '3', '5', '4', '*', '*'},
-			{'*', '*', '*', '*', '8', '*', '2', '*', '*'},
-			{'*', '*', '7', '4', '9', '6', '8', '*', '1'},
-			{'8', '9', '3', '1', '5', '*', '6', '*', '4'},
-			{'*', '*', '1', '9', '2', '*', '5', '*', '*'},
-			{'2', '*', '*', '3', '*', '*', '7', '4', '*'},
-			{'9', '6', '*', '5', '*', '*', '3', '*', '2'}
+	public static String[][] startGrid = {
+			{"3", "*", "*", "2", "4", "*", "*", "6", "*"},
+			{"*", "4", "*", "*", "*", "*", "*", "5", "3"},
+			{"1", "8", "9", "6", "3", "5", "4", "*", "*"},
+			{"*", "*", "*", "*", "8", "*", "2", "*", "*"},
+			{"*", "*", "7", "4", "9", "6", "8", "*", "1"},
+			{"8", "9", "3", "1", "5", "*", "6", "*", "4"},
+			{"*", "*", "1", "9", "2", "*", "5", "*", "*"},
+			{"2", "*", "*", "3", "*", "*", "7", "4", "*"},
+			{"9", "6", "*", "5", "*", "*", "3", "*", "2"}
 		};
 	
-	public static char[][] correctGrid = {
-			{'5', '3', '4', '6', '7', '8', '9', '1', '2'},
-            {'6', '7', '2', '1', '9', '5', '3', '4', '8'},
-            {'1', '9', '8', '3', '4', '2', '5', '6', '7'},
-            {'8', '5', '9', '7', '6', '1', '4', '2', '3'},
-            {'4', '2', '6', '8', '5', '3', '7', '9', '1'},
-            {'7', '1', '3', '9', '2', '4', '8', '5', '6'},
-            {'9', '6', '1', '5', '3', '7', '2', '8', '4'},
-            {'2', '8', '7', '4', '1', '9', '6', '3', '5'},
-            {'3', '4', '5', '2', '8', '6', '1', '7', '9'}
+	public static String[][] correctGrid = {
+			{"5", "3", "4", "6", "7", "8", "9", "1", "2"},
+            {"6", "7", "2", "1", "9", "5", "3", "4", "8"},
+            {"1", "9", "8", "3", "4", "2", "5", "6", "7"},
+            {"8", "5", "9", "7", "6", "1", "4", "2", "3"},
+            {"4", "2", "6", "8", "5", "3", "7", "9", "1"},
+            {"7", "1", "3", "9", "2", "4", "8", "5", "6"},
+            {"9", "6", "1", "5", "3", "7", "2", "8", "4"},
+            {"2", "8", "7", "4", "1", "9", "6", "3", "5"},
+            {"3", "4", "5", "2", "8", "6", "1", "7", "9"}
 		};
 
 	mainer()
@@ -32,9 +30,7 @@ public class mainer{
 //		startGrid[][] = ;
 	}
 	
-	public static void dfs(char grid[][]){
-		int value = 0;
-		char valuec;
+	public static void printGrid(String grid[][]){
 		for(int i=0; i<grid.length; i++)
 		{
 			for(int j=0; j<grid[i].length; j++)
@@ -42,11 +38,12 @@ public class mainer{
 				System.out.print("  " + grid[i][j]);
 			}
 			System.out.println('\n');
+			
 		}
 	}
 	
-	public static boolean checkConstraints(char[][] grid){
-		char currentValue;
+	public static boolean checkConstraints(String[][] grid){
+		String currentValue;
 		for(int i=0; i<grid.length; i++)
 		{
 			for(int j=0; j<grid[i].length; j++)
@@ -54,7 +51,7 @@ public class mainer{
 				currentValue = grid[i][j];
 				for(int z=j + 1; z<grid.length; z++)
 				{
-					if(grid[i][z] == currentValue || grid[i][z] == '*')
+					if(grid[i][z].equals(currentValue) || grid[i][z].equals("*"))
 					{
 						return false;
 					}
@@ -115,7 +112,7 @@ public class mainer{
 				{
 					while(v>=0)
 					{
-						if(grid[w][v] == currentValue)
+						if(grid[w][v].equals(currentValue))
 						{
 							copies ++;
 						}
@@ -134,8 +131,8 @@ public class mainer{
 	
 	public static void main(String [] args)
 	{
-		char[][] grid = {{'3', '1', '5', '2', '4', '7', '8', '6', '9'},{'1', '4', '2', '6', '7', '8', '9', '5', '3'}};
-		dfs(correctGrid);
+//		char[][] grid = {{'3', '1', '5', '2', '4', '7', '8', '6', '9'},{'1', '4', '2', '6', '7', '8', '9', '5', '3'}};
+		printGrid(correctGrid);
 		boolean test = checkConstraints(correctGrid);
 		System.out.println(test);
 	}
