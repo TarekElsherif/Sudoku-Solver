@@ -6,6 +6,7 @@ public class Node {
 	public ArrayList<Node> successors = new ArrayList<Node>();
 	public int[] domain = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	public Node parent;
+	public int[] assignment; // [x, y, value]
 
 	public Node() {
 		state = new String[9][9];
@@ -19,9 +20,10 @@ public class Node {
 		generateSuccessors();
 	}
 
-	public Node(String[][] s, Node p) {
+	public Node(String[][] s, Node p, int[] a) {
 		state = s;
 		parent = p;
+		assignment = a;
 		generateSuccessors();
 	}
 
@@ -44,14 +46,14 @@ public class Node {
 	public void generateSuccessors() {
 		int[] nextEmptyCell = this.getNextEmptyCell();
 		if (nextEmptyCell != null) {
-			//System.out.println("Generating Successors!");
 			int x = nextEmptyCell[0];
 			int y = nextEmptyCell[1];
 			for (int i = 1; i <= 9; i++) {
 				String[][] tempState = this.state;
 				tempState[y][x] = "" + i;
-				System.out.println(x + ", " + y + ", value: " + i);
-				this.successors.add(new Node(tempState, this));
+				int[] change = {x, y, i};
+				// System.out.println(change[0] + ", " + change[1] + ", value: " + change[2]);
+				this.successors.add(new Node(tempState, this, change));
 			}
 		}
 	}
