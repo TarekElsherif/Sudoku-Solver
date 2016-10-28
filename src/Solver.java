@@ -27,7 +27,7 @@ public class Solver {
 			for (int j = 0; j < grid[i].length; j++) {
 				currentValue = grid[i][j];
 				for (int z = j + 1; z < grid.length; z++) {
-					if (grid[i][z].equals(currentValue) || grid[i][z].equals("*")) {
+					if (grid[i][z].equals(currentValue) || grid[i][z].equals("*") || currentValue.equals("*")) {
 						return false;
 					}
 				}
@@ -97,14 +97,15 @@ public class Solver {
 	}
 
 	public void depthFirst(Node n) {
-		// printGrid(n.state);
+		printGrid(n.state);
 		System.out.println(stack.size() + " total");
 		if (!checkConstraints(n.state)) {
 			if (stack.contains(n)) {
 				stack.remove(n);
 				System.out.println(stack.size() + " after remove");
 			}
-
+			
+			n.generateSuccessors();
 			if (n.successors.isEmpty() != true) {
 				successors.clear();
 				successors = n.successors;
@@ -139,6 +140,7 @@ public class Solver {
 		if (n.parent == null) {
 			stack.add(n);
 		}
+		n.generateSuccessors();
 		if (n.successors.isEmpty() != true) {
 			stack.addAll(n.successors);
 
@@ -152,6 +154,6 @@ public class Solver {
 		Node startNode = new Node(fp.getCells());
 		Solver s = new Solver();
 		s.depthFirst(startNode);
-		//s.printGrid(s.solution.get(0).state);
+		s.printGrid(s.solution.get(0).state);
 	}
 }

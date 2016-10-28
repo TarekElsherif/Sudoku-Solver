@@ -29,6 +29,7 @@ public class Node {
 		for (int y = 0; y < state.length; y++) {
 			for (int x = 0; x < state[y].length; x++) {
 				// System.out.println(x + " " + y);
+				//System.out.println(state[x][y]);
 				if ((state[y][x].equals("*")) || (state[y][x].isEmpty())
 						|| (state[y][x].equals("0"))) {
 					result[0] = x;
@@ -51,8 +52,8 @@ public class Node {
 			for (int i = 1; i <= 9; i++) {
 				tempState[y][x] = "" + i;
 				int[] change = { x, y, i };
-				 System.out.println(change[0] + ", " + change[1] + ", value: "
-				 + change[2]);
+//				 System.out.println(change[0] + ", " + change[1] + ", value: "
+//				 + change[2]);
 				this.successors.add(new Node(tempState, this, change));
 			}
 		}
