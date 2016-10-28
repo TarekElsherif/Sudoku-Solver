@@ -11,20 +11,17 @@ public class Node {
 	public Node() {
 		state = new String[9][9];
 		parent = null;
-		generateSuccessors();
 	}
 
 	public Node(String[][] s) {
 		state = s;
 		parent = null;
-		generateSuccessors();
 	}
 
 	public Node(String[][] s, Node p, int[] a) {
 		state = s;
 		parent = p;
 		assignment = a;
-		generateSuccessors();
 	}
 
 	public int[] getNextEmptyCell() {
@@ -48,14 +45,42 @@ public class Node {
 		if (nextEmptyCell != null) {
 			int x = nextEmptyCell[0];
 			int y = nextEmptyCell[1];
+			String[][] tempState = new String[9][9];
+			for(int i = 0; i < state.length; i++)
+			    tempState[i] = state[i].clone();
 			for (int i = 1; i <= 9; i++) {
-				String[][] tempState = this.state;
 				tempState[y][x] = "" + i;
-				int[] change = {x, y, i};
-				// System.out.println(change[0] + ", " + change[1] + ", value: " + change[2]);
+				int[] change = { x, y, i };
+				 System.out.println(change[0] + ", " + change[1] + ", value: "
+				 + change[2]);
 				this.successors.add(new Node(tempState, this, change));
 			}
 		}
+	}
+
+	public String toString() {
+		if (assignment != null) {
+			return "" + showCells() + "\n=====" + "x: " + this.assignment[0]
+					+ ", y: " + this.assignment[1] + ", value: "
+					+ this.assignment[2] + "\n=====";
+		} else {
+			return "" + showCells() + "\n=====";
+		}
+	}
+
+	public String showCells() {
+		String result = "";
+		for (int y = 0; y < this.state.length; y++) {
+			for (int x = 0; x < state[y].length; x++) {
+				result = result + " " + state[y][x] + " ";
+			}
+			result = result + "\n";
+		}
+		return result;
+	}
+	
+	public ArrayList<Node> getSuccessors() {
+		return successors;
 	}
 
 	public static void main(String[] args) {
