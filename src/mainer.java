@@ -139,7 +139,7 @@ public class mainer{
 		Node startNode = new Node(fp.getCells());
 		System.out.println(startNode.toString());
 		startNode.generateSuccessors();
-		startNode.getSuccessors().get(0).generateSuccessors();
+		System.out.println(startNode.getSuccessors().get(0).toString());
 	}
 
 }
