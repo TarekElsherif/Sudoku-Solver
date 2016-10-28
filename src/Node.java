@@ -45,14 +45,14 @@ public class Node {
 		if (nextEmptyCell != null) {
 			int x = nextEmptyCell[0];
 			int y = nextEmptyCell[1];
-			String[][] tempState = new String[9][9];
-			for(int i = 0; i < state.length; i++)
-			    tempState[i] = state[i].clone();
-			for (int i = 1; i <= 9; i++) {
-				tempState[y][x] = "" + i;
-				int[] change = { x, y, i };
-				 System.out.println(change[0] + ", " + change[1] + ", value: "
-				 + change[2]);
+			for (int j = 1; j <= 9; j++) {
+				String[][] tempState = new String[9][9];
+				for(int i = 0; i < state.length; i++)
+				    tempState[i] = state[i].clone();
+				tempState[y][x] = "" + j;
+				int[] change = { x, y, j };
+//				System.out.println(change[0] + ", " + change[1] + ", value: "
+//				 + change[2]);
 				this.successors.add(new Node(tempState, this, change));
 			}
 		}
@@ -60,7 +60,7 @@ public class Node {
 
 	public String toString() {
 		if (assignment != null) {
-			return "" + showCells() + "\n=====" + "x: " + this.assignment[0]
+			return "" + showCells() + "\n=====" + "\nx: " + this.assignment[0]
 					+ ", y: " + this.assignment[1] + ", value: "
 					+ this.assignment[2] + "\n=====";
 		} else {
