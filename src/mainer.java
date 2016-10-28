@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class mainer{
@@ -51,7 +52,7 @@ public class mainer{
 				currentValue = grid[i][j];
 				for(int z=j + 1; z<grid.length; z++)
 				{
-					if(grid[i][z].equals(currentValue) || grid[i][z].equals("*"))
+					if(grid[i][z].equals(currentValue) || grid[i][z].equals("*") || currentValue.equals("*"))
 					{
 						return false;
 					}
@@ -129,12 +130,34 @@ public class mainer{
 		return true;
 	}
 	
+	public static ArrayList<String> forwardCheckConstraints(String[][] grid, int x, int y){
+		ArrayList<String> existingValues = new ArrayList<String> ();
+//		int start = 0;
+		for(int j=0; j<grid.length; j++){
+			if(!grid[x][j].equals("*")){
+				if(!existingValues.contains(grid[x][j])){
+					existingValues.add(grid[x][j]);
+				}
+			}
+		}
+		for(int i=0; i<grid.length; i++){
+			if(!grid[i][y].equals("*")){
+				if(!existingValues.contains(grid[i][y])){
+					existingValues.add(grid[i][y]);
+				}
+			}
+		}
+		return existingValues;
+	}
+//	
 	public static void main(String [] args)
 	{
+//		System.out.println(forwardCheckConstraints(startGrid, 0, 1));
 //		char[][] grid = {{'3', '1', '5', '2', '4', '7', '8', '6', '9'},{'1', '4', '2', '6', '7', '8', '9', '5', '3'}};
-		printGrid(correctGrid);
-		boolean test = checkConstraints(correctGrid);
-		System.out.println(test);
+//		printGrid(correctGrid);
+//		boolean test = checkConstraints(correctGrid);
+//		System.out.println(test);
+		
 	}
 
 }
