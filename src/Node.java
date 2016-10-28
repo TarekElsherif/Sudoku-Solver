@@ -6,7 +6,6 @@ public class Node {
 	public ArrayList<Node> successors = new ArrayList<Node>();
 	public int[] domain = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	public Node parent;
-	public static int level = 0;
 
 	public Node() {
 		state = new String[9][9];
@@ -60,6 +59,5 @@ public class Node {
 	public static void main(String[] args) {
 		FileParser f = new FileParser();
 		Node n = new Node(f.getCells());
-		System.out.println(level);
 	}
 }
