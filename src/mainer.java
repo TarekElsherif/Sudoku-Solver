@@ -132,9 +132,14 @@ public class mainer{
 	public static void main(String [] args)
 	{
 //		char[][] grid = {{'3', '1', '5', '2', '4', '7', '8', '6', '9'},{'1', '4', '2', '6', '7', '8', '9', '5', '3'}};
-		printGrid(correctGrid);
-		boolean test = checkConstraints(correctGrid);
-		System.out.println(test);
+//		printGrid(correctGrid);
+//		boolean test = checkConstraints(correctGrid);
+//		System.out.println(test);
+		FileParser fp = new FileParser();
+		Node startNode = new Node(fp.getCells());
+		System.out.println(startNode.toString());
+		startNode.generateSuccessors();
+		startNode.getSuccessors().get(0).generateSuccessors();
 	}
 
 }
