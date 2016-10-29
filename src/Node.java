@@ -41,6 +41,19 @@ public class Node {
 		}
 		return null;
 	}
+	
+	public ArrayList<Integer[]> getAllEmptyCells() {
+		ArrayList<Integer[]> arr = new ArrayList<Integer[]>();
+		for (int y = 0; y < state.length; y++) {
+			for (int x = 0; x < state[y].length; x++) {
+				if (state[y][x].equals("*")) {
+					Integer[] xy = {x, y};
+					arr.add(xy);
+				}
+			}
+		}
+		return arr;
+	}
 
 	public void generateSuccessors() {
 		// generates successors (possible moves) in the next empty cell

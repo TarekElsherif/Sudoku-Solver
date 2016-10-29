@@ -201,7 +201,6 @@ public class mainer {
 		Solver s = new Solver();
 		s.breadthFirst(startNode);
 		// s.depthFirst(startNode);
-		System.out.println();
 		System.out.println(s.stack.get(s.stack.size() - 1).toString());
 		writeSolutionToFile(s.getResultNode());
 
