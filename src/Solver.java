@@ -200,14 +200,16 @@ public class Solver {
 
 	}
 	
-	public Node getResultNode() {
-		if (!stack.isEmpty()) {
-			return solution.get(0);
-		} else {
-			return null;
-		}
-	}
 
+//	public Node getResultNode() {
+//		if (!stack.isEmpty()) {
+//			return stack.get(stack.size() - 1);
+//		} else {
+//			return null;
+//		}
+//	}
+	
+	
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
