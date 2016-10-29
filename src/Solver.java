@@ -24,67 +24,105 @@ public class Solver {
 	public boolean checkConstraints(String[][] grid) {
 		String currentValue;
 		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
+			for (int j = 0; j < grid.length; j++) {
 				currentValue = grid[i][j];
-				for (int z = j + 1; z < grid.length; z++) {
-					if (grid[i][z].equals(currentValue)
-							|| grid[i][z].equals("*")
-							|| currentValue.equals("*")) {
-						return false;
+				if (currentValue.equals("*")) {
+					return false;
+				} else {
+					for (int k = 0; k < grid.length; k++) {
+						if (k != i) {
+							if (grid[k][j].equals(currentValue) || grid[k][j].equals("*")) {
+								// System.out.println("copies in the column");
+								return false;
+							}
+						}
+					}
+
+					for (int l = 0; l < grid.length; l++) {
+						if (l != j) {
+							if (grid[i][l].equals(currentValue) || grid[i][l].equals("*")) {
+								// System.out.println("copies in the row");
+								return false;
+							}
+						}
 					}
 				}
 
-				int w = 0, v = 0;
+				int lowerLimitX = 0;
+				int upperLimitX = 0;
+				int lowerLimitY = 0;
+				int upperLimitY = 0;
+
 				if (j < 3) {
-					v = 2;
+					lowerLimitX = 0;
+					upperLimitX = 3;
 					if (i < 3) {
-						w = 2;
+						lowerLimitY = 0;
+						upperLimitY = 3;
 					}
-					if (i < 6 && i > 3) {
-						w = 5;
+					if (i >= 3 && i < 6) {
+						lowerLimitY = 3;
+						upperLimitY = 6;
 					}
-					if (i > 6) {
-						w = 8;
+					if (i >= 6) {
+						lowerLimitY = 6;
+						upperLimitY = 9;
 					}
-				} else if (j < 6 && j > 3) {
-					v = 5;
+				}
+
+				if (j >= 3 && j < 6) {
+					lowerLimitX = 0;
+					upperLimitX = 3;
 					if (i < 3) {
-						w = 2;
+						lowerLimitY = 0;
+						upperLimitY = 3;
 					}
-					if (i < 6 && i > 3) {
-						w = 5;
+					if (i >= 3 && i < 6) {
+						lowerLimitY = 3;
+						upperLimitY = 6;
 					}
-					if (i > 6) {
-						w = 8;
+					if (i >= 6) {
+						lowerLimitY = 6;
+						upperLimitY = 9;
 					}
-				} else if (j > 6) {
-					v = 8;
+				}
+
+				if (j >= 6) {
+					lowerLimitX = 0;
+					upperLimitX = 3;
 					if (i < 3) {
-						w = 2;
+						lowerLimitY = 0;
+						upperLimitY = 3;
 					}
-					if (i < 6 && i > 3) {
-						w = 5;
+					if (i >= 3 && i < 6) {
+						lowerLimitY = 3;
+						upperLimitY = 6;
 					}
-					if (i > 6) {
-						w = 8;
+					if (i >= 6) {
+						lowerLimitY = 6;
+						upperLimitY = 9;
 					}
 				}
 
 				int copies = 0;
-				while (w >= 0) {
-					while (v >= 0) {
-						if (grid[w][v].equals(currentValue)) {
+				while (lowerLimitX < upperLimitX) {
+					while (lowerLimitY < upperLimitY) {
+						if (grid[lowerLimitY][lowerLimitX].equals(currentValue)) {
 							copies++;
 						}
+
 						if (copies > 1) {
+							// System.out.println("many copies");
 							return false;
 						}
-						v--;
+
+						lowerLimitY++;
 					}
-					w--;
+					lowerLimitX++;
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -100,11 +138,11 @@ public class Solver {
 
 	public void depthFirst(Node n) {
 		printGrid(n.state);
-		System.out.println(stack.size() + " total");
+		// System.out.println(stack.size() + " total");
 		if (!checkConstraints(n.state)) {
 			if (stack.contains(n)) {
 				stack.remove(n);
-				System.out.println(stack.size() + " after remove");
+				// System.out.println(stack.size() + " after remove");
 			}
 
 			n.generateSuccessors();
@@ -113,7 +151,7 @@ public class Solver {
 				successors = n.successors;
 				for (int i = successors.size() - 1; i >= 0; i--) {
 					stack.add(successors.get(i));
-					System.out.println(stack.size() + " after add");
+					// System.out.println(stack.size() + " after add");
 				}
 
 				traverse.add(n);
@@ -122,6 +160,7 @@ public class Solver {
 
 		} else {
 			System.out.println("found");
+			solution.clear();
 			getSolutionBranch(n);
 			return;
 		}
@@ -135,22 +174,32 @@ public class Solver {
 	}
 
 	public void breadthFirst(Node n) {
-		/*
-		 * Here we first check this isn't the right one if not, get its children
-		 */
-		if (n.parent == null) {
-			stack.clear();
-			stack.add(n);
-		}
-		n.generateSuccessors();
-		if (n.successors.isEmpty() != true) {
-			stack.addAll(n.successors);
 
+		if (!checkConstraints(n.state)) {
+			if (n.parent == null) {
+				stack.add(n);
+			}
+			n.generateSuccessors();
+			if (n.successors.isEmpty() != true) {
+				stack.addAll(n.successors);
+			}
+
+			traverse.add(n);
+		} else {
+			System.out.println("found");
+			solution.clear();
+			getSolutionBranch(n);
+			return;
 		}
 
-		breadthFirst(stack.get(stack.indexOf(n) + 1));
+		if (stack.indexOf(n) + 1 < stack.size()) {
+			breadthFirst(stack.get(stack.indexOf(n) + 1));
+		} else {
+			return;
+		}
+
 	}
-
+	
 	public Node getResultNode() {
 		if (!stack.isEmpty()) {
 			return stack.get(stack.size() - 1);
@@ -163,7 +212,7 @@ public class Solver {
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
 		Solver s = new Solver();
-		s.depthFirst(startNode);
+		s.breadthFirst(startNode);
 		s.printGrid(s.solution.get(0).state);
 	}
 }
