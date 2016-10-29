@@ -129,26 +129,7 @@ public class mainer{
 		}
 		return true;
 	}
-	
-	public static ArrayList<String> forwardCheckConstraints(String[][] grid, int x, int y){
-		ArrayList<String> existingValues = new ArrayList<String> ();
-//		int start = 0;
-		for(int j=0; j<grid.length; j++){
-			if(!grid[x][j].equals("*")){
-				if(!existingValues.contains(grid[x][j])){
-					existingValues.add(grid[x][j]);
-				}
-			}
-		}
-		for(int i=0; i<grid.length; i++){
-			if(!grid[i][y].equals("*")){
-				if(!existingValues.contains(grid[i][y])){
-					existingValues.add(grid[i][y]);
-				}
-			}
-		}
-		return existingValues;
-	}
+
 //	
 	public static void main(String [] args)
 	{
