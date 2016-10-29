@@ -45,12 +45,12 @@ public class Node {
 		if (nextEmptyCell != null) {
 			int x = nextEmptyCell[0];
 			int y = nextEmptyCell[1];
-			for (int j = 1; j <= 9; j++) {
+			for (int j = 0; j < this.domain.length; j++) {
 				String[][] tempState = new String[9][9];
 				for (int i = 0; i < state.length; i++)
 					tempState[i] = state[i].clone();
-				tempState[y][x] = "" + j;
-				int[] change = { x, y, j };
+				tempState[y][x] = "" + domain[j];
+				int[] change = { x, y, domain[j] };
 				// System.out.println(change[0] + ", " + change[1] + ", value: "
 				// + change[2]);
 				this.successors.add(new Node(tempState, this, change));
@@ -91,6 +91,13 @@ public class Node {
 			result = result + "\n";
 		}
 		return result;
+	}
+	
+	public void changeDomain(int[] newDomain) {
+		this.domain = new int[newDomain.length];
+		for (int i = 0; i < newDomain.length; i++) {
+			domain[i] = newDomain[i];
+		}
 	}
 
 	public String getChange() {

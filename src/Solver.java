@@ -202,7 +202,7 @@ public class Solver {
 	
 	public Node getResultNode() {
 		if (!stack.isEmpty()) {
-			return stack.get(stack.size() - 1);
+			return solution.get(0);
 		} else {
 			return null;
 		}
