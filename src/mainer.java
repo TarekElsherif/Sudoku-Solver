@@ -104,6 +104,88 @@ public class mainer {
 		}
 		return true;
 	}
+	
+	public static ArrayList<String> domainCheckConstraints(String[][] grid, int x, int y){
+		ArrayList<String> existingValues = new ArrayList<String> ();
+		
+		for(int j=0; j<grid.length; j++){
+			if(!grid[x][j].equals("*") && !existingValues.contains(grid[x][j])){
+				existingValues.add(grid[x][j]);
+			}
+		}
+		for(int i=0; i<grid.length; i++){
+			if(!grid[i][y].equals("*") && !existingValues.contains(grid[i][y])){
+				existingValues.add(grid[i][y]);
+			}
+		}
+		
+		int lowerLimitX = 0;
+		int upperLimitX = 0;
+		int lowerLimitY = 0;
+		int upperLimitY = 0;
+
+		if(x<3){
+			lowerLimitX = 0;
+			upperLimitX = 3;
+			if (y < 3) {
+				lowerLimitY = 0;
+				upperLimitY = 3;
+			}
+			if (y >= 3 && y < 6) {
+				lowerLimitY = 3;
+				upperLimitY = 6;
+			}
+			if (y >= 6) {
+				lowerLimitY = 6;
+				upperLimitY = 9;
+			}
+		}
+		
+		if(x<6 && x>=3){
+			lowerLimitX = 3;
+			upperLimitX = 6;
+			if (y < 3) {
+				lowerLimitY = 0;
+				upperLimitY = 3;
+			}
+			if (y >= 3 && y < 6) {
+				lowerLimitY = 3;
+				upperLimitY = 6;
+			}
+			if (y >= 6) {
+				lowerLimitY = 6;
+				upperLimitY = 9;
+			}
+		}
+		
+		if(x>=6){
+			lowerLimitX = 6;
+			upperLimitX = 9;
+			if (y < 3) {
+				lowerLimitY = 0;
+				upperLimitY = 3;
+			}
+			if (y >= 3 && y < 6) {
+				lowerLimitY = 3;
+				upperLimitY = 6;
+			}
+			if (y >= 6) {
+				lowerLimitY = 6;
+				upperLimitY = 9;
+			}
+		}
+		
+		while (lowerLimitX < upperLimitX) {
+			while (lowerLimitY < upperLimitY) {
+				if(!grid[lowerLimitY][lowerLimitX].equals("*") && !existingValues.contains(grid[lowerLimitY][lowerLimitX])){
+					existingValues.add(grid[lowerLimitY][lowerLimitX]);
+				}
+				lowerLimitY++;
+			}
+			lowerLimitX++;
+		}
+		return existingValues;
+	}
 
 	public static void writeSolutionToFile(Node n) {
 		String str = "Solution:\n";
@@ -124,13 +206,15 @@ public class mainer {
 	}
 
 	public static void main(String[] args) {
-		FileParser fp = new FileParser();
-		Node startNode = new Node(fp.getCells());
-		Solver s = new Solver();
-		s.depthFirst(startNode);
-		System.out.println();
-		System.out.println(s.stack.get(s.stack.size() - 1).toString());
-		writeSolutionToFile(s.getResultNode());
+//		FileParser fp = new FileParser();
+//		Node startNode = new Node(fp.getCells());
+//		Solver s = new Solver();
+//		s.depthFirst(startNode);
+//		System.out.println();
+//		System.out.println(s.stack.get(s.stack.size() - 1).toString());
+//		writeSolutionToFile(s.getResultNode());
+		printGrid(startGrid);
+		System.out.println(domainCheckConstraints(startGrid, 8, 7));
 	}
 
 }
