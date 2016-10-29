@@ -58,6 +58,20 @@ public class Node {
 		}
 	}
 
+	public void generateSuccessorsMC(int x, int y, int[] value) {
+		for (int j = 0; j < value.length; j++) {
+			String[][] tempState = new String[9][9];
+			for (int i = 0; i < state.length; i++)
+				tempState[i] = state[i].clone();
+			tempState[y][x] = "" + value[j];
+			int[] change = { x, y, j };
+			System.out.println(change[0] + ", " + change[1] + ", value: "
+					+ change[2]);
+			this.successors.add(new Node(tempState, this, change));
+		}
+
+	}
+
 	public String toString() {
 		if (assignment != null) {
 			return "" + showCells() + "\n=====" + "\nx: " + this.assignment[0]
@@ -91,5 +105,8 @@ public class Node {
 	public static void main(String[] args) {
 		FileParser f = new FileParser();
 		Node n = new Node(f.getCells());
+		int[] v = { 2, 3, 4 };
+		n.generateSuccessorsMC(1, 0, v);
+		System.out.println(n.successors.get(0).toString());
 	}
 }
