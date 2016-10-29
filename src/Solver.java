@@ -160,6 +160,7 @@ public class Solver {
 
 		} else {
 			System.out.println("found");
+			solution.clear();
 			getSolutionBranch(n);
 			return;
 		}
@@ -186,6 +187,7 @@ public class Solver {
 			traverse.add(n);
 		} else {
 			System.out.println("found");
+			solution.clear();
 			getSolutionBranch(n);
 			return;
 		}
