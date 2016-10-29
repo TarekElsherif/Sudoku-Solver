@@ -25,6 +25,8 @@ public class Node {
 	}
 
 	public int[] getNextEmptyCell() {
+		// returns the x and y values of the next empty cells in the node (e.g.
+		// [3, 4] in which x = 3 and y = 4)
 		int[] result = new int[2];
 		for (int y = 0; y < state.length; y++) {
 			for (int x = 0; x < state[y].length; x++) {
@@ -41,6 +43,9 @@ public class Node {
 	}
 
 	public void generateSuccessors() {
+		// generates successors (possible moves) in the next empty cell
+		// according
+		// to the domain
 		int[] nextEmptyCell = this.getNextEmptyCell();
 		if (nextEmptyCell != null) {
 			int x = nextEmptyCell[0];
@@ -59,6 +64,8 @@ public class Node {
 	}
 
 	public void generateSuccessorsMC(int x, int y, int[] value) {
+		// generates successors (possible moves) in the given cell according to
+		// the given domain
 		for (int j = 0; j < value.length; j++) {
 			String[][] tempState = new String[9][9];
 			for (int i = 0; i < state.length; i++)
@@ -83,6 +90,7 @@ public class Node {
 	}
 
 	public String showCells() {
+		// returns the Sudoku grid as a String
 		String result = "";
 		for (int y = 0; y < this.state.length; y++) {
 			for (int x = 0; x < state[y].length; x++) {
@@ -92,8 +100,9 @@ public class Node {
 		}
 		return result;
 	}
-	
+
 	public void changeDomain(int[] newDomain) {
+		// changes the domain of the node
 		this.domain = new int[newDomain.length];
 		for (int i = 0; i < newDomain.length; i++) {
 			domain[i] = newDomain[i];
