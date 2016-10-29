@@ -47,12 +47,12 @@ public class Node {
 			int y = nextEmptyCell[1];
 			for (int j = 1; j <= 9; j++) {
 				String[][] tempState = new String[9][9];
-				for(int i = 0; i < state.length; i++)
-				    tempState[i] = state[i].clone();
+				for (int i = 0; i < state.length; i++)
+					tempState[i] = state[i].clone();
 				tempState[y][x] = "" + j;
 				int[] change = { x, y, j };
-//				System.out.println(change[0] + ", " + change[1] + ", value: "
-//				 + change[2]);
+				// System.out.println(change[0] + ", " + change[1] + ", value: "
+				// + change[2]);
 				this.successors.add(new Node(tempState, this, change));
 			}
 		}
@@ -78,7 +78,12 @@ public class Node {
 		}
 		return result;
 	}
-	
+
+	public String getChange() {
+		return "x: " + assignment[0] + ", y: " + assignment[1] + ", value: "
+				+ assignment[2];
+	}
+
 	public ArrayList<Node> getSuccessors() {
 		return successors;
 	}

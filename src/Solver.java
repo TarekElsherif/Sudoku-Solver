@@ -27,7 +27,9 @@ public class Solver {
 			for (int j = 0; j < grid[i].length; j++) {
 				currentValue = grid[i][j];
 				for (int z = j + 1; z < grid.length; z++) {
-					if (grid[i][z].equals(currentValue) || grid[i][z].equals("*") || currentValue.equals("*")) {
+					if (grid[i][z].equals(currentValue)
+							|| grid[i][z].equals("*")
+							|| currentValue.equals("*")) {
 						return false;
 					}
 				}
@@ -104,7 +106,7 @@ public class Solver {
 				stack.remove(n);
 				System.out.println(stack.size() + " after remove");
 			}
-			
+
 			n.generateSuccessors();
 			if (n.successors.isEmpty() != true) {
 				successors.clear();
@@ -123,13 +125,12 @@ public class Solver {
 			getSolutionBranch(n);
 			return;
 		}
-		
-		if(stack.size() > 0){
+
+		if (stack.size() > 0) {
 			depthFirst(stack.get(stack.size() - 1));
 		} else {
 			return;
 		}
-
 
 	}
 
@@ -138,6 +139,7 @@ public class Solver {
 		 * Here we first check this isn't the right one if not, get its children
 		 */
 		if (n.parent == null) {
+			stack.clear();
 			stack.add(n);
 		}
 		n.generateSuccessors();
@@ -147,6 +149,14 @@ public class Solver {
 		}
 
 		breadthFirst(stack.get(stack.indexOf(n) + 1));
+	}
+
+	public Node getResultNode() {
+		if (!stack.isEmpty()) {
+			return stack.get(stack.size() - 1);
+		} else {
+			return null;
+		}
 	}
 
 	public static void main(String[] args) {

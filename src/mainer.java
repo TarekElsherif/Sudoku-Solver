@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class mainer{
 	public static String[][] startGrid = {
@@ -129,17 +131,33 @@ public class mainer{
 		return true;
 	}
 	
+	public static void writeSolutionToFile(Node n) {
+		String str = "Solution:\n";
+		FileParser fp = new FileParser();
+		str = str + n.showCells();
+		Stack steps = new Stack();
+		Node pn = n;
+		while (pn.parent != null) {
+			steps.push(pn);
+			pn = pn.parent;
+		}
+		str = str + "\nPlacements:";
+		while (!steps.isEmpty()) {
+			Node x = (Node) steps.pop();
+			str = str + "\n" + x.getChange();
+		}
+		fp.writeFile(str);
+	}
+	
 	public static void main(String [] args)
 	{
-//		char[][] grid = {{'3', '1', '5', '2', '4', '7', '8', '6', '9'},{'1', '4', '2', '6', '7', '8', '9', '5', '3'}};
-//		printGrid(correctGrid);
-//		boolean test = checkConstraints(correctGrid);
-//		System.out.println(test);
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
-		System.out.println(startNode.toString());
-		startNode.generateSuccessors();
-		System.out.println(startNode.getSuccessors().get(0).toString());
+		Solver s = new Solver();
+		s.breadthFirst(startNode);
+		System.out.println();
+		System.out.println(s.stack.get(s.stack.size() - 1).toString());
+		writeSolutionToFile(s.getResultNode());
 	}
 
 }
