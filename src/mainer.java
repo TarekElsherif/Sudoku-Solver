@@ -157,7 +157,7 @@ public class mainer{
 		s.depthFirst(startNode);
 		System.out.println();
 		System.out.println(s.stack.get(s.stack.size() - 1).toString());
-		writeSolutionToFile(s.getResultNode());
+		writeSolutionToFile(s.solution.get(0));
 	}
 
 }
