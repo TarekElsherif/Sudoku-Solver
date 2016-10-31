@@ -166,9 +166,9 @@ public class mainer {
 
 		while (lowerLimitX < upperLimitX) {
 			while (lowerLimitY < upperLimitY) {
-				if (!grid[lowerLimitY][lowerLimitX].equals("*")
-						&& !existingValues.contains(grid[lowerLimitY][lowerLimitX])) {
-					existingValues.add(grid[lowerLimitY][lowerLimitX]);
+				if (!grid[lowerLimitX][lowerLimitY].equals("*")
+						&& !existingValues.contains(grid[lowerLimitX][lowerLimitY])) {
+					existingValues.add(grid[lowerLimitX][lowerLimitY]);
 				}
 				lowerLimitY++;
 			}
@@ -182,7 +182,7 @@ public class mainer {
 				result.add("" + i);
 			}
 		}
-		
+//		
 //		return existingValues;
 		return result;
 	}
@@ -212,11 +212,13 @@ public class mainer {
 //		s.breadthFirst(startNode);
 //		s.breadthFirst(startNode);
 //		System.out.println(startNode.toString());
-		ArrayList<String> str = domainCheckConstraints(startNode.state, 4, 1);
-		for (int i = 0; i < str.size(); i++) {
-			System.out.println("Possible sol: " + str.get(i));
-		}
-		s.solveMostConstraint(startNode);
+//		ArrayList<String> str = domainCheckConstraints(startNode.state, 4, 1);
+//		for (int i = 0; i < str.size(); i++) {
+//			System.out.println("Possible sol: " + str.get(i));
+//		}
+//		s.solveMostConstraint(startNode);
+//		mainer m = new mainer();
+//		System.out.println(m.domainCheckConstraints(startNode.state, 0, 8));
 //		writeSolutionToFile(s.solution.get(0));
 	}
 
