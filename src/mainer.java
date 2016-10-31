@@ -20,13 +20,13 @@ public class mainer {
 	}
 
 	public static void printGrid(String grid[][]) {
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-				System.out.print("  " + grid[i][j]);
-			}
-			System.out.println('\n');
-
-		}
+//		for (int i = 0; i < grid.length; i++) {
+//			for (int j = 0; j < grid[i].length; j++) {
+//				System.out.print("  " + grid[i][j]);
+//			}
+//			System.out.println('\n');
+//
+//		}
 	}
 
 	public static boolean checkConstraints(String[][] grid) {
@@ -174,7 +174,17 @@ public class mainer {
 			}
 			lowerLimitX++;
 		}
-		return existingValues;
+		
+		// add the non-existing values in an ArrayList
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i = 1; i <= 9; i++) {
+			if (!existingValues.contains("" + i)) {
+				result.add("" + i);
+			}
+		}
+		
+//		return existingValues;
+		return result;
 	}
 
 	public static void writeSolutionToFile(Node n) {
@@ -199,10 +209,15 @@ public class mainer {
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
 		Solver s = new Solver();
-		s.breadthFirst(startNode);
-		// s.depthFirst(startNode);
-		System.out.println(s.stack.get(s.stack.size() - 1).toString());
-		writeSolutionToFile(s.solution.get(0));
+//		s.breadthFirst(startNode);
+//		s.breadthFirst(startNode);
+//		System.out.println(startNode.toString());
+		ArrayList<String> str = domainCheckConstraints(startNode.state, 4, 1);
+		for (int i = 0; i < str.size(); i++) {
+			System.out.println("Possible sol: " + str.get(i));
+		}
+		s.solveMostConstraint(startNode);
+//		writeSolutionToFile(s.solution.get(0));
 	}
 
 }
