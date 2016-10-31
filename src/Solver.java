@@ -203,16 +203,90 @@ public class Solver {
 
 	}
 	
-	public ArrayList<int[]> getEmptyCells(String[][] grid) {
+	public ArrayList<int[]> getRelations(int[] current, String[][] grid){
 		ArrayList<int[]> result = new ArrayList<int[]>();
 		for(int i = 0; i < grid.length; i++){
-			for(int j = 0; j < grid.length; j++){
-				if(grid[i][j].equals("*")){
-					//System.out.println(new String[] {i+"",j+""});
-					result.add(new int[] {i,j});
+			if(i != current[0]){
+				if(grid[i][current[1]].equals("*")){
+					result.add(new int[] {i,current[1]});
 				}
 			}
 		}
+		
+		for(int j = 0; j < grid.length; j++){
+			if(j != current[1]){
+				if(grid[current[0]][j].equals("*")){
+					result.add(new int[] {current[0],j});
+				}
+			}
+		}
+		
+		int lowerLimitX = 0;
+		int upperLimitX = 0;
+		int lowerLimitY = 0;
+		int upperLimitY = 0;
+		
+		if (current[1] < 3) {
+			lowerLimitX = 0;
+			upperLimitX = 3;
+			if (current[0] < 3) {
+				lowerLimitY = 0;
+				upperLimitY = 3;
+			}
+			if (current[0] >= 3 && current[0] < 6) {
+				lowerLimitY = 3;
+				upperLimitY = 6;
+			}
+			if (current[0] >= 6) {
+				lowerLimitY = 6;
+				upperLimitY = 9;
+			}
+		}
+
+		if (current[1] >= 3 && current[1] < 6) {
+			lowerLimitX = 0;
+			upperLimitX = 3;
+			if (current[0] < 3) {
+				lowerLimitY = 0;
+				upperLimitY = 3;
+			}
+			if (current[0] >= 3 && current[0] < 6) {
+				lowerLimitY = 3;
+				upperLimitY = 6;
+			}
+			if (current[0] >= 6) {
+				lowerLimitY = 6;
+				upperLimitY = 9;
+			}
+		}
+
+		if (current[1] >= 6) {
+			lowerLimitX = 0;
+			upperLimitX = 3;
+			if (current[0] < 3) {
+				lowerLimitY = 0;
+				upperLimitY = 3;
+			}
+			if (current[0] >= 3 && current[0] < 6) {
+				lowerLimitY = 3;
+				upperLimitY = 6;
+			}
+			if (current[0] >= 6) {
+				lowerLimitY = 6;
+				upperLimitY = 9;
+			}
+		}
+		
+		while(lowerLimitX < upperLimitX){
+			while(lowerLimitY < upperLimitY){
+				if(lowerLimitX != current[1] && lowerLimitY != current[0]){
+					if(grid[lowerLimitY][lowerLimitX].equals("*")){
+						result.add(new int[] {lowerLimitY,lowerLimitX});
+					}
+				}
+			}
+		}
+		
 		return result;
 	}
 	
@@ -261,19 +335,10 @@ public class Solver {
 		solveMostConstraint(n.successors.get(0));
 		return;
 	}
-
-	// public Node getResultNode() {
-	// if (!stack.isEmpty()) {
-	// return stack.get(stack.size() - 1);
-	// } else {
-	// return null;
-	// }
-	// }
 	
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
 		Solver s = new Solver();
-		s.getEmptyCells(startNode.state);
 	}
 }
