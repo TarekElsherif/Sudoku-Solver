@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Solver {
 	public Node pre;
@@ -31,7 +33,8 @@ public class Solver {
 				} else {
 					for (int k = 0; k < grid.length; k++) {
 						if (k != i) {
-							if (grid[k][j].equals(currentValue) || grid[k][j].equals("*")) {
+							if (grid[k][j].equals(currentValue)
+									|| grid[k][j].equals("*")) {
 								// System.out.println("copies in the column");
 								return false;
 							}
@@ -40,7 +43,8 @@ public class Solver {
 
 					for (int l = 0; l < grid.length; l++) {
 						if (l != j) {
-							if (grid[i][l].equals(currentValue) || grid[i][l].equals("*")) {
+							if (grid[i][l].equals(currentValue)
+									|| grid[i][l].equals("*")) {
 								// System.out.println("copies in the row");
 								return false;
 							}
@@ -137,7 +141,7 @@ public class Solver {
 	}
 
 	public void depthFirst(Node n) {
-		printGrid(n.state);
+		// printGrid(n.state);
 		// System.out.println(stack.size() + " total");
 		if (!checkConstraints(n.state)) {
 			if (stack.contains(n)) {
@@ -153,13 +157,12 @@ public class Solver {
 					stack.add(successors.get(i));
 					// System.out.println(stack.size() + " after add");
 				}
-
 				traverse.add(n);
 
 			}
 
 		} else {
-			System.out.println("found");
+			// System.out.println("found");
 			solution.clear();
 			getSolutionBranch(n);
 			return;
@@ -186,7 +189,7 @@ public class Solver {
 
 			traverse.add(n);
 		} else {
-			System.out.println("found");
+			// System.out.println("found");
 			solution.clear();
 			getSolutionBranch(n);
 			return;
@@ -199,14 +202,6 @@ public class Solver {
 		}
 
 	}
-	
-//	public Node getResultNode() {
-//		if (!stack.isEmpty()) {
-//			return stack.get(stack.size() - 1);
-//		} else {
-//			return null;
-//		}
-//	}
 	
 	public ArrayList<int[]> getEmptyCells(String[][] grid) {
 		ArrayList<int[]> result = new ArrayList<int[]>();
@@ -229,6 +224,51 @@ public class Solver {
 	public void arcConsistency(String[][] grid) {
 		
 	}
+
+	public ArrayList<Integer[]> orderCellsMC(ArrayList<Integer[]> arr) {
+		return null;
+	}
+
+	public void solveMostConstraint(Node n) {
+		ArrayList<Integer[]> emptyCells = n.getAllEmptyCells();
+		if (emptyCells.isEmpty()) {
+			return;
+		}
+		Integer[] firstEmpty = n.getAllEmptyCells().get(0);
+		int min = mainer.domainCheckConstraints(n.state, firstEmpty[0],
+				firstEmpty[1]).size();
+		int minIndex = 0;
+		for (int i = 1; i < emptyCells.size(); i++) {
+			Integer[] curEmpty = emptyCells.get(i);
+			int curSize = mainer
+					.domainCheckConstraints(n.state, curEmpty[0], curEmpty[1])
+					.size();
+			System.out.println(curEmpty[0] + " " + curEmpty[1]);
+			System.out.println("Size: " + curSize);
+			if (curSize < min) {
+				min = curSize;
+				minIndex = i;
+			}
+		}
+		Integer[] chosen = emptyCells.get(minIndex);
+		ArrayList<String> domain = mainer.domainCheckConstraints(n.state, chosen[0], chosen[1]);
+		int [] domainInt = new int[domain.size()];
+		for (int i = 0; i < domain.size(); i++) {
+			domainInt[i] = Integer.parseInt(domain.get(i));
+		}
+		n.generateSuccessorsMC(chosen[0], chosen[1], domainInt);
+		stack.add(n);
+		solveMostConstraint(n.successors.get(0));
+		return;
+	}
+
+	// public Node getResultNode() {
+	// if (!stack.isEmpty()) {
+	// return stack.get(stack.size() - 1);
+	// } else {
+	// return null;
+	// }
+	// }
 	
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
