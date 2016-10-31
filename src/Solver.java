@@ -208,13 +208,32 @@ public class Solver {
 //		}
 //	}
 	
+	public ArrayList<int[]> getEmptyCells(String[][] grid) {
+		ArrayList<int[]> result = new ArrayList<int[]>();
+		for(int i = 0; i < grid.length; i++){
+			for(int j = 0; j < grid.length; j++){
+				if(grid[i][j].equals("*")){
+					//System.out.println(new String[] {i+"",j+""});
+					result.add(new int[] {i,j});
+				}
+			}
+		}
+		return result;
+	}
 	
+	public void generateArcs(String[][] grid, ArrayList<int[]>emptyCells){
+		
+	}
+	
+	
+	public void arcConsistency(String[][] grid) {
+		
+	}
 	
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
 		Solver s = new Solver();
-		s.breadthFirst(startNode);
-		s.printGrid(s.solution.get(0).state);
+		s.getEmptyCells(startNode.state);
 	}
 }
