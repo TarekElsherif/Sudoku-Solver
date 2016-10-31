@@ -187,6 +187,20 @@ public class mainer {
 		return result;
 	}
 
+	public void forwardChecking(Node n){
+		if(n.getAllEmptyCells().isEmpty()) return;
+		int [] axis = n.getNextEmptyCell();
+		ArrayList<String> domain = mainer.domainCheckConstraints(n.state, axis[1], axis[0]);
+		int [] domainInt = new int[domain.size()];
+		for (int i = 0; i < domain.size(); i++) {
+			domainInt[i] = Integer.parseInt(domain.get(i));
+		}
+		n.generateSuccessorsMC(axis[0], axis[1], domainInt);
+		
+		forwardChecking(n.getSuccessors().get(0));
+		System.out.println(n.getSuccessors().get(0).toString());
+	}
+	
 	public static void writeSolutionToFile(Node n) {
 		String str = "Solution:\n";
 		FileParser fp = new FileParser();
@@ -217,8 +231,9 @@ public class mainer {
 //			System.out.println("Possible sol: " + str.get(i));
 //		}
 //		s.solveMostConstraint(startNode);
-//		mainer m = new mainer();
+		mainer m = new mainer();
 //		System.out.println(m.domainCheckConstraints(startNode.state, 0, 8));
+		m.forwardChecking(startNode);
 //		writeSolutionToFile(s.solution.get(0));
 	}
 

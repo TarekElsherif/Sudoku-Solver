@@ -33,8 +33,7 @@ public class Solver {
 				} else {
 					for (int k = 0; k < grid.length; k++) {
 						if (k != i) {
-							if (grid[k][j].equals(currentValue)
-									|| grid[k][j].equals("*")) {
+							if (grid[k][j].equals(currentValue) || grid[k][j].equals("*")) {
 								// System.out.println("copies in the column");
 								return false;
 							}
@@ -43,8 +42,7 @@ public class Solver {
 
 					for (int l = 0; l < grid.length; l++) {
 						if (l != j) {
-							if (grid[i][l].equals(currentValue)
-									|| grid[i][l].equals("*")) {
+							if (grid[i][l].equals(currentValue) || grid[i][l].equals("*")) {
 								// System.out.println("copies in the row");
 								return false;
 							}
@@ -202,27 +200,26 @@ public class Solver {
 		}
 
 	}
-	
+
 	public ArrayList<int[]> getEmptyCells(String[][] grid) {
 		ArrayList<int[]> result = new ArrayList<int[]>();
-		for(int i = 0; i < grid.length; i++){
-			for(int j = 0; j < grid.length; j++){
-				if(grid[i][j].equals("*")){
-					//System.out.println(new String[] {i+"",j+""});
-					result.add(new int[] {i,j});
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				if (grid[i][j].equals("*")) {
+					// System.out.println(new String[] {i+"",j+""});
+					result.add(new int[] { i, j });
 				}
 			}
 		}
 		return result;
 	}
-	
-	public void generateArcs(String[][] grid, ArrayList<int[]>emptyCells){
-		
+
+	public void generateArcs(String[][] grid, ArrayList<int[]> emptyCells) {
+
 	}
-	
-	
+
 	public void arcConsistency(String[][] grid) {
-		
+
 	}
 
 	public ArrayList<Integer[]> orderCellsMC(ArrayList<Integer[]> arr) {
@@ -235,14 +232,11 @@ public class Solver {
 			return;
 		}
 		Integer[] firstEmpty = n.getAllEmptyCells().get(0);
-		int min = mainer.domainCheckConstraints(n.state, firstEmpty[0],
-				firstEmpty[1]).size();
+		int min = mainer.domainCheckConstraints(n.state, firstEmpty[0], firstEmpty[1]).size();
 		int minIndex = 0;
 		for (int i = 1; i < emptyCells.size(); i++) {
 			Integer[] curEmpty = emptyCells.get(i);
-			int curSize = mainer
-					.domainCheckConstraints(n.state, curEmpty[0], curEmpty[1])
-					.size();
+			int curSize = mainer.domainCheckConstraints(n.state, curEmpty[0], curEmpty[1]).size();
 			System.out.println(curEmpty[0] + " " + curEmpty[1]);
 			System.out.println("Size: " + curSize);
 			if (curSize < min) {
@@ -251,8 +245,9 @@ public class Solver {
 			}
 		}
 		Integer[] chosen = emptyCells.get(minIndex);
+		// coverting
 		ArrayList<String> domain = mainer.domainCheckConstraints(n.state, chosen[0], chosen[1]);
-		int [] domainInt = new int[domain.size()];
+		int[] domainInt = new int[domain.size()];
 		for (int i = 0; i < domain.size(); i++) {
 			domainInt[i] = Integer.parseInt(domain.get(i));
 		}
@@ -260,6 +255,22 @@ public class Solver {
 		stack.add(n);
 		solveMostConstraint(n.successors.get(0));
 		return;
+	}
+	
+// Forward Checking method
+	public void forwardChecking(Node n) {
+		if (n.getAllEmptyCells().isEmpty())
+			return;
+		int[] axis = n.getNextEmptyCell();
+		ArrayList<String> domain = mainer.domainCheckConstraints(n.state, axis[1], axis[0]);
+		int[] domainInt = new int[domain.size()];
+		for (int i = 0; i < domain.size(); i++) {
+			domainInt[i] = Integer.parseInt(domain.get(i));
+		}
+		n.generateSuccessorsMC(axis[0], axis[1], domainInt);
+
+		forwardChecking(n.getSuccessors().get(0));
+		System.out.println(n.getSuccessors().get(0).toString());
 	}
 
 	// public Node getResultNode() {
@@ -269,7 +280,7 @@ public class Solver {
 	// return null;
 	// }
 	// }
-	
+
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
 		Node startNode = new Node(fp.getCells());
