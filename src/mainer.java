@@ -94,112 +94,117 @@ public class mainer {
 		return true;
 	}
 
-	public static ArrayList<String> domainCheckConstraints(String[][] grid, int x, int y) {
-		ArrayList<String> existingValues = new ArrayList<String>();
-
-		for (int j = 0; j < grid.length; j++) {
-			if (!grid[x][j].equals("*") && !existingValues.contains(grid[x][j])) {
-				existingValues.add(grid[x][j]);
-			}
-		}
-		for (int i = 0; i < grid.length; i++) {
-			if (!grid[i][y].equals("*") && !existingValues.contains(grid[i][y])) {
-				existingValues.add(grid[i][y]);
-			}
-		}
-
-		int lowerLimitX = 0;
-		int upperLimitX = 0;
-		int lowerLimitY = 0;
-		int upperLimitY = 0;
-
-		if (x < 3) {
-			lowerLimitX = 0;
-			upperLimitX = 3;
-			if (y < 3) {
-				lowerLimitY = 0;
-				upperLimitY = 3;
-			}
-			if (y >= 3 && y < 6) {
-				lowerLimitY = 3;
-				upperLimitY = 6;
-			}
-			if (y >= 6) {
-				lowerLimitY = 6;
-				upperLimitY = 9;
-			}
-		}
-
-		if (x < 6 && x >= 3) {
-			lowerLimitX = 3;
-			upperLimitX = 6;
-			if (y < 3) {
-				lowerLimitY = 0;
-				upperLimitY = 3;
-			}
-			if (y >= 3 && y < 6) {
-				lowerLimitY = 3;
-				upperLimitY = 6;
-			}
-			if (y >= 6) {
-				lowerLimitY = 6;
-				upperLimitY = 9;
-			}
-		}
-
-		if (x >= 6) {
-			lowerLimitX = 6;
-			upperLimitX = 9;
-			if (y < 3) {
-				lowerLimitY = 0;
-				upperLimitY = 3;
-			}
-			if (y >= 3 && y < 6) {
-				lowerLimitY = 3;
-				upperLimitY = 6;
-			}
-			if (y >= 6) {
-				lowerLimitY = 6;
-				upperLimitY = 9;
-			}
-		}
-
-		while (lowerLimitX < upperLimitX) {
-			while (lowerLimitY < upperLimitY) {
-				if (!grid[lowerLimitX][lowerLimitY].equals("*")
-						&& !existingValues.contains(grid[lowerLimitX][lowerLimitY])) {
-					existingValues.add(grid[lowerLimitX][lowerLimitY]);
-				}
-				lowerLimitY++;
-			}
-			lowerLimitX++;
-		}
-		
-		// add the non-existing values in an ArrayList
-		ArrayList<String> result = new ArrayList<String>();
-		for (int i = 1; i <= 9; i++) {
-			if (!existingValues.contains("" + i)) {
-				result.add("" + i);
-			}
-		}
+//	public static ArrayList<String> domainCheckConstraints(String[][] grid, int x, int y) {
+//		ArrayList<String> existingValues = new ArrayList<String>();
+//
+//		for (int j = 0; j < grid.length; j++) {
+//			if (!grid[x][j].equals("*") && !existingValues.contains(grid[x][j])) {
+//				existingValues.add(grid[x][j]);
+//			}
+//		}
+//		for (int i = 0; i < grid.length; i++) {
+//			if (!grid[i][y].equals("*") && !existingValues.contains(grid[i][y])) {
+//				existingValues.add(grid[i][y]);
+//			}
+//		}
+//
+//		int lowerLimitX = 0;
+//		int upperLimitX = 0;
+//		int lowerLimitY = 0;
+//		int upperLimitY = 0;
+//
+//		if (x < 3) {
+//			lowerLimitX = 0;
+//			upperLimitX = 3;
+//			if (y < 3) {
+//				lowerLimitY = 0;
+//				upperLimitY = 3;
+//			}
+//			if (y >= 3 && y < 6) {
+//				lowerLimitY = 3;
+//				upperLimitY = 6;
+//			}
+//			if (y >= 6) {
+//				lowerLimitY = 6;
+//				upperLimitY = 9;
+//			}
+//		}
+//
+//		if (x < 6 && x >= 3) {
+//			lowerLimitX = 3;
+//			upperLimitX = 6;
+//			if (y < 3) {
+//				lowerLimitY = 0;
+//				upperLimitY = 3;
+//			}
+//			if (y >= 3 && y < 6) {
+//				lowerLimitY = 3;
+//				upperLimitY = 6;
+//			}
+//			if (y >= 6) {
+//				lowerLimitY = 6;
+//				upperLimitY = 9;
+//			}
+//		}
+//
+//		if (x >= 6) {
+//			lowerLimitX = 6;
+//			upperLimitX = 9;
+//			if (y < 3) {
+//				lowerLimitY = 0;
+//				upperLimitY = 3;
+//			}
+//			if (y >= 3 && y < 6) {
+//				lowerLimitY = 3;
+//				upperLimitY = 6;
+//			}
+//			if (y >= 6) {
+//				lowerLimitY = 6;
+//				upperLimitY = 9;
+//			}
+//		}
+//
+//		while (lowerLimitX < upperLimitX) {
+//			while (lowerLimitY < upperLimitY) {
+//				if (!grid[lowerLimitX][lowerLimitY].equals("*")
+//						&& !existingValues.contains(grid[lowerLimitX][lowerLimitY])) {
+//					existingValues.add(grid[lowerLimitX][lowerLimitY]);
+//				}
+//				lowerLimitY++;
+//			}
+//			lowerLimitX++;
+//		}
 //		
-//		return existingValues;
-		return result;
-	}
+//		// add the non-existing values in an ArrayList
+//		ArrayList<String> result = new ArrayList<String>();
+//		for (int i = 1; i <= 9; i++) {
+//			if (!existingValues.contains("" + i)) {
+//				result.add("" + i);
+//			}
+//		}
+////		
+////		return existingValues;
+//		return result;
+//	}
 
-	public void forwardChecking(Node n){
-		if(n.getAllEmptyCells().isEmpty()) return;
-		int [] axis = n.getNextEmptyCell();
-		ArrayList<String> domain = mainer.domainCheckConstraints(n.state, axis[1], axis[0]);
-		int [] domainInt = new int[domain.size()];
-		for (int i = 0; i < domain.size(); i++) {
-			domainInt[i] = Integer.parseInt(domain.get(i));
-		}
-		n.generateSuccessorsMC(axis[0], axis[1], domainInt);
-		
-		forwardChecking(n.getSuccessors().get(0));
-		System.out.println(n.getSuccessors().get(0).toString());
-	}
+//	public void forwardChecking(Node n){
+//		if(n.getAllEmptyCells().isEmpty()) return;
+//		int [] axis = n.getNextEmptyCell();
+//		ArrayList<String> domain = mainer.domainCheckConstraints(n.state, axis[1], axis[0]);
+//		int [] domainInt = new int[domain.size()];
+//		for (int i = 0; i < domain.size(); i++) {
+//			domainInt[i] = Integer.parseInt(domain.get(i));
+//		}
+//		n.generateSuccessorsMC(axis[0], axis[1], domainInt);
+//		
+//		forwardChecking(n.getSuccessors().get(0));
+//		
+//		solution.clear();
+//		getSolutionBranch(n);
+//		return;
+//		//System.out.println(n.getSuccessors().get(0).toString());
+//		
+//	}
 	
 	public static void writeSolutionToFile(Node n) {
 		String str = "Solution:\n";
@@ -230,11 +235,12 @@ public class mainer {
 //		for (int i = 0; i < str.size(); i++) {
 //			System.out.println("Possible sol: " + str.get(i));
 //		}
-//		s.solveMostConstraint(startNode);
+		//s.solveMostConstraint(startNode);
 		mainer m = new mainer();
 //		System.out.println(m.domainCheckConstraints(startNode.state, 0, 8));
-		m.forwardChecking(startNode);
-//		writeSolutionToFile(s.solution.get(0));
+		//Node n = s.forwardChecking(startNode);
+//		Node c = s.solveMostConstraint(startNode);
+		writeSolutionToFile(s.arcConsistency(startNode));
 	}
 
 }
