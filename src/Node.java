@@ -84,7 +84,7 @@ public class Node {
 			for (int i = 0; i < state.length; i++)
 				tempState[i] = state[i].clone();
 			tempState[y][x] = "" + value[j];
-			int[] change = { x, y, j };
+			int[] change = { x, y, value[j] };
 			System.out.println(change[0] + ", " + change[1] + ", value: "
 					+ change[2]);
 			this.successors.add(new Node(tempState, this, change));
